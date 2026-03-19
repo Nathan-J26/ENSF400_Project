@@ -4,6 +4,7 @@
   color: white;
   padding: 10px;
   flex: 0 0 350px;
+  border-right: black solid 1px;
 }
 
 .history-item {

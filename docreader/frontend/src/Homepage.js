@@ -9,6 +9,14 @@ function Homepage() {
     console.log("Handel submit");
   };
 
+  const MAX_HEIGHT = 500;
+  function handleTextareaInput(e) {
+    const el = e.target;
+
+    el.style.height = "auto"; // reset so it can shrink if needed
+    el.style.height = `${Math.min(el.scrollHeight, MAX_HEIGHT)}px`;
+  }
+
   return (
     <div className="container">
       <Sidebar />
@@ -19,6 +27,7 @@ function Homepage() {
         <textarea
           id="user-input"
           placeholder="Paste your documentation here..."
+          onInput={handleTextareaInput}
         />
 
         <div className="controls">
@@ -32,7 +41,7 @@ function Homepage() {
 
         <div className="output">
           <h3>Summary:</h3>
-          <p></p>
+          <p className="summary-text"></p>
         </div>
       </div>
     </div>

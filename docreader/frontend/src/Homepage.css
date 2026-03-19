@@ -13,7 +13,7 @@
 #user-input {
   font-size: 1.2rem;
   width: 65vw;
-  min-height: max(22vh, 200px);
+  min-height: max(14vh, 200px);
   max-height: 500px;
   resize: none;
   overflow-y: auto;
@@ -28,11 +28,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-button {
-  padding: 6px 12px;
-  cursor: pointer;
 }
 
 h2 {
@@ -57,10 +52,13 @@ button {
 }
 
 button {
+  padding: 6px 12px;
+  cursor: pointer;
   background-color: white;
   border-color: rgb(118, 118, 118);
   border-radius: 0.5vw;
   font-family: monospace;
+  box-shadow: 2px 2px #9daaaa;
 }
 
 button:hover {
@@ -68,5 +66,9 @@ button:hover {
 }
 
 .output h3 {
-  font-weight: 300;
+  font-weight: 400;
+}
+
+.output {
+  border: rgb(118, 118, 118) solid 1px;
 }
