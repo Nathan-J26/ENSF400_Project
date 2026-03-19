@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import "./Homepage.css";
 
 function Homepage() {
   const handleSubmit = async () => {
@@ -15,7 +16,10 @@ function Homepage() {
       <div className="main">
         <h2>DocReader</h2>
 
-        <textarea placeholder="Paste your documentation here..." />
+        <textarea
+          id="user-input"
+          placeholder="Paste your documentation here..."
+        />
 
         <div className="controls">
           <label>

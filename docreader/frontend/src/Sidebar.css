@@ -3,9 +3,16 @@
   background: #536e6e;
   color: white;
   padding: 10px;
+  flex: 0 0 350px;
 }
 
 .history-item {
   margin: 5px 0;
   font-size: 14px;
+}
+
+h3 {
+  font-size: 2.4rem;
+  font-family: "Tourney";
+  font-weight: 200;
 }
