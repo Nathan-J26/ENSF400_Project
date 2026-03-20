@@ -12,7 +12,7 @@ CORS(app)
 # Do not put your API keys on github
 # You have to set an environment variable
 # For windows, in a terminal do setx GEMINI_API_KEY_400 "your api key here"
-# Afterwards, restart your terminal
+# Afterwards, restart all open terminals and vscode
 API_KEY = os.getenv("GEMINI_API_KEY_400")
 GEMINI_MODEL = "gemini-2.5-flash"
 
