@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+// import { Route, Routes, BrowserRouter } from "react-router-dom";
 import "./Homepage.css";
 
 function Homepage() {
