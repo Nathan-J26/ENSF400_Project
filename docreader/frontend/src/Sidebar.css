@@ -1,9 +1,9 @@
 .sidebar {
-  width: 200px;
+  width: 160px;
   background: #536e6e;
   color: white;
   padding: 10px;
-  flex: 0 0 350px;
+  flex: 0 0 260px;
   border-right: black solid 1px;
 }
 
@@ -13,7 +13,7 @@
 }
 
 h3 {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-family: "Tourney";
   font-weight: 200;
 }

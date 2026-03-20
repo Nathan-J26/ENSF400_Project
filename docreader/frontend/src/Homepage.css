@@ -11,7 +11,7 @@
 }
 
 #user-input {
-  font-size: 1.2rem;
+  font-size: 1rem;
   width: 65vw;
   min-height: max(14vh, 200px);
   max-height: 500px;
@@ -32,7 +32,7 @@
 
 h2 {
   font-family: "Tourney";
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 400;
   box-sizing: border-box;
   margin: 2vh;
@@ -48,7 +48,7 @@ h2 {
 .controls label,
 .output,
 button {
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 button {
@@ -63,6 +63,14 @@ button {
 
 button:hover {
   background-color: rgb(228, 228, 228);
+}
+
+.controls label {
+  padding: 3px 5px 3px 0;
+  border-radius: 0.1vw;
+}
+.controls label:hover {
+  background-color: #9daaaa;
 }
 
 .output h3 {
