@@ -8,6 +8,7 @@ import axios from "axios";
 function Homepage() {
   const [input, setInput] = useState("");
   const [summary, setSummary] = useState("");
+  const [includeExamples, setIncludeExamples] = useState(false);
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -19,6 +20,7 @@ function Homepage() {
     try {
       const res = await axios.post("http://localhost:5000/summarize", {
         text: input,
+        include_examples: includeExamples,
       });
       setSummary(res.data.summary);
       console.log(res.data.summary);
@@ -53,7 +55,11 @@ function Homepage() {
 
         <div className="controls">
           <label>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={includeExamples}
+              onChange={() => setIncludeExamples(!includeExamples)}
+            />
             Include example code
           </label>
 

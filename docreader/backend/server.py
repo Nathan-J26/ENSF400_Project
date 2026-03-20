@@ -23,9 +23,25 @@ client = genai.Client(api_key=API_KEY)
 @app.route("/summarize", methods=["POST"])
 def summarize():
     data = request.json
-    user_input = data.get("text", "")
+    user_input = data.get("text")
 
-    prompt = "Give me a paragraph by shakespeare" #placeholder for test
+    if not user_input:
+        return jsonify({"error": "Input can't be empty"}), 400
+
+    include_examples = data.get("include_examples")
+
+    # prompt = "Give me a paragraph by shakespeare" #placeholder for test
+    prompt = f"""
+    Simplify the following documentation into a short, compressed and human readable summary
+    NOTES:
+    - Do not use markdown formatting, such as using ### and '''
+    - Use simple and clean formatting. Using plain text paragraphs and bullet points only
+
+    {user_input}
+    """
+    if include_examples:
+        prompt += "\nInclude some code examples in the summary"
+    
     try:
         response = client.models.generate_content(
             model=GEMINI_MODEL, contents=[prompt]
