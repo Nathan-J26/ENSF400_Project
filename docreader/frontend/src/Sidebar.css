@@ -1,0 +1,19 @@
+.sidebar {
+  width: 160px;
+  background: #536e6e;
+  color: white;
+  padding: 10px;
+  flex: 0 0 260px;
+  border-right: black solid 1px;
+}
+
+.history-item {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+h3 {
+  font-size: 2rem;
+  font-family: "Tourney";
+  font-weight: 200;
+}
