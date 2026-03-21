@@ -3,7 +3,8 @@ from flask_cors import CORS
 import json
 import os
 from google import genai
-
+from services.conversation_service import create_conversation
+from services.message_service import add_message
 
 app = Flask(__name__)
 CORS(app)
@@ -30,25 +31,30 @@ def summarize():
 
     include_examples = data.get("include_examples")
 
-    # prompt = "Give me a paragraph by shakespeare" #placeholder for test
     prompt = f"""
-    Simplify the following documentation into a short, compressed and human readable summary
-    NOTES:
-    - Do not use markdown formatting, such as using ### and '''
-    - Use simple and clean formatting. Using plain text paragraphs and bullet points only
-
+    Simplify the following documentation...
     {user_input}
     """
+
     if include_examples:
         prompt += "\nInclude some code examples in the summary"
-    
+
     try:
         response = client.models.generate_content(
             model=GEMINI_MODEL, contents=[prompt]
         )
-        return jsonify({"summary": response.text})
-    except Exception as e:
-        return jsonify({"error":str(e)}), 500
 
+        summary_text = response.text
+
+        # Example: store conversation (temporary user_id=1)
+        convo = create_conversation(user_id=1, title=user_input[:50])
+        add_message(convo.id, "user", user_input)
+        add_message(convo.id, "assistant", summary_text)
+
+        return jsonify({"summary": summary_text})
+
+    except Exception as e:
+        print("Error in /summarize:", e)
+        return jsonify({"error": str(e)}), 500
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
