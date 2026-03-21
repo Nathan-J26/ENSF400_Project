@@ -1,4 +1,4 @@
-/* ── Sidebar ──────────────────────────────────────────────── */
+/* ── Sidebar: Hacker Terminal ───────────────────────────── */
 .sidebar {
   width: 260px;
   min-width: 260px;
@@ -7,35 +7,21 @@
   flex-direction: column;
   padding: 24px 16px 16px;
   background: var(--bg-surface);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid var(--border-color);
+  border-right: 2px solid var(--accent-green);
   position: relative;
   overflow: hidden;
 }
 
-/* Glowing left accent line */
+/* Matrix Accent Line */
 .sidebar::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--accent-cyan) 30%,
-    var(--accent-violet) 70%,
-    transparent 100%
-  );
-  opacity: 0.6;
-  animation: sidebarGlow 4s ease-in-out infinite alternate;
-}
-
-@keyframes sidebarGlow {
-  0% { opacity: 0.4; }
-  100% { opacity: 0.8; }
+  width: 1px;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
 }
 
 /* ── Brand ────────────────────────────────────────────────── */
@@ -44,28 +30,28 @@
   align-items: center;
   gap: 12px;
   padding: 0 4px 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--accent-green-muted);
   margin-bottom: 20px;
 }
 
 .brand-icon {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  text-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
-  background: var(--accent-cyan-dim);
-  padding: 6px 8px;
+  font-weight: bold;
+  color: #000;
+  background: var(--accent-green);
+  padding: 4px 8px;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 15px var(--accent-green);
 }
 
 .brand-text {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--accent-green);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* ── New Chat Button ──────────────────────────────────────── */
@@ -75,56 +61,37 @@
   gap: 10px;
   width: 100%;
   padding: 12px 14px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
+  background: transparent;
+  border: 2px solid var(--accent-green);
+  border-radius: var(--radius-sm);
+  color: var(--accent-green);
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-fast);
   margin-bottom: 24px;
 }
 
 .new-chat-btn:hover {
-  background: var(--accent-cyan-dim);
-  border-color: var(--border-glow);
-  color: var(--accent-cyan);
-  box-shadow: var(--glow-cyan);
-  transform: translateY(-1px);
-}
-
-.btn-icon {
-  font-size: 1.1rem;
-  font-weight: 300;
-  line-height: 1;
+  background: var(--accent-green);
+  color: #000;
+  box-shadow: 0 0 15px var(--accent-green);
 }
 
 /* ── Section ──────────────────────────────────────────────── */
-.sidebar-section {
-  flex: 1;
-  overflow-y: auto;
-}
-
 .sidebar-section-title {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
+  color: var(--accent-green-muted);
   padding: 0 4px;
   margin-bottom: 12px;
 }
 
 /* ── History Items ────────────────────────────────────────── */
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .history-item {
   display: flex;
   align-items: center;
@@ -132,28 +99,25 @@
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .history-item:hover {
-  background: var(--bg-elevated);
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
 }
 
 .history-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--text-muted);
-  flex-shrink: 0;
+  background: var(--accent-green-muted);
 }
 
-.history-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-style: italic;
+.history-item:hover .history-dot {
+  background: var(--accent-green);
+  box-shadow: 0 0 5px var(--accent-green);
 }
 
 /* ── Footer ───────────────────────────────────────────────── */
@@ -162,27 +126,27 @@
   align-items: center;
   gap: 8px;
   padding: 16px 4px 0;
-  border-top: 1px solid var(--border-color);
+  border-top: 2px solid var(--accent-green-muted);
   margin-top: auto;
 }
 
 .footer-text {
   font-size: 0.7rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: var(--accent-green-muted);
+  font-weight: bold;
 }
 
 .footer-pulse {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
-  animation: pulse 2s ease-in-out infinite;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: hackerPulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
+@keyframes hackerPulse {
+  0% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.4; filter: brightness(0.5); }
+  100% { opacity: 1; filter: brightness(1); }
 }

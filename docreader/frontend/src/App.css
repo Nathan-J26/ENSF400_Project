@@ -1,66 +1,88 @@
-/* ── App Shell ─────────────────────────────────────────────── */
+/* ── App Shell: Hacker Terminal ───────────────────────────── */
 .App {
   min-height: 100vh;
   display: flex;
   position: relative;
   overflow: hidden;
-  background: var(--bg-primary);
+  /* Flex direction row by default is fine, let's ensure it doesn't wrap */
+  flex-wrap: nowrap;
 }
 
-/* ── Animated Background Gradient ─────────────────────────── */
+/* ── Matrix Background Overlay ────────────────────────────── */
+.matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── CRT Scanline Overlay ─────────────────────────────────── */
 .App::before {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(0, 229, 255, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(124, 77, 255, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 229, 255, 0.02) 0%, transparent 70%);
-  animation: bgShift 20s ease-in-out infinite alternate;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.2) 25%,
+    rgba(18, 16, 16, 0) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 1px 100%;
   pointer-events: none;
-  z-index: 0;
+  z-index: 100;
+  animation: scanline 8s linear infinite;
 }
 
-/* Floating orb — top right */
+/* ── Screen Flicker/Static ────────────────────────────────── */
 .App::after {
   content: '';
   position: fixed;
-  width: 500px;
-  height: 500px;
-  top: -120px;
-  right: -120px;
-  background: radial-gradient(circle, rgba(124, 77, 255, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: orbFloat 15s ease-in-out infinite alternate;
+  inset: 0;
+  background: rgba(18, 16, 16, 0.05);
+  opacity: 0;
+  z-index: 101;
   pointer-events: none;
-  z-index: 0;
+  animation: flicker 0.1s infinite;
 }
 
-@keyframes bgShift {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
 }
 
-@keyframes orbFloat {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-40px, 60px) scale(1.1);
-  }
-  100% {
-    transform: translate(20px, -30px) scale(0.95);
-  }
+@keyframes flicker {
+  0% { opacity: 0.1; }
+  5% { opacity: 0.15; }
+  10% { opacity: 0.1; }
+  30% { opacity: 0.2; }
+  35% { opacity: 0.1; }
+  50% { opacity: 0.15; }
+  85% { opacity: 0.1; }
+  90% { opacity: 0.2; }
+  100% { opacity: 0.1; }
 }
 
-/* ── Grid Lines Overlay (subtle) ──────────────────────────── */
-.App > * {
+/* Ensure content stays readable and above background */
+.App > *:not(.matrix-canvas) {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  flex: 1; /* Allow content to fill space */
+  display: flex; /* Sidebar and Main side-by-side */
+}
+
+/* Global Vignette */
+.App-shell {
+  position: fixed;
+  inset: 0;
+  box-shadow: inset 0 0 150px rgba(0, 20, 0, 0.8);
+  pointer-events: none;
+  z-index: 99;
 }

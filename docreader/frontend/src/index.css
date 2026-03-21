@@ -1,43 +1,42 @@
-/* ── Design Tokens ─────────────────────────────────────────── */
+/* ── Design Tokens: Hacker Terminal ────────────────────────── */
 :root {
-  /* Backgrounds */
-  --bg-primary: #0a0e1a;
-  --bg-surface: rgba(15, 20, 40, 0.65);
-  --bg-surface-solid: #0f1428;
-  --bg-elevated: rgba(20, 28, 58, 0.55);
-  --bg-input: rgba(10, 14, 30, 0.8);
+  /* Backgrounds: Pure Black/Dark Green */
+  --bg-primary: #000000;
+  --bg-surface: rgba(0, 15, 0, 0.85);
+  --bg-surface-solid: #050a05;
+  --bg-elevated: rgba(0, 31, 0, 0.45);
+  --bg-input: rgba(0, 5, 0, 0.95);
 
-  /* Accents */
-  --accent-cyan: #00e5ff;
-  --accent-violet: #7c4dff;
-  --accent-cyan-dim: rgba(0, 229, 255, 0.15);
-  --accent-violet-dim: rgba(124, 77, 255, 0.1);
+  /* Accents: Fluorescent Green (Matrix) */
+  --accent-green: #00ff41;
+  --accent-green-bright: #33ff00;
+  --accent-green-dim: rgba(0, 255, 65, 0.15);
+  --accent-green-muted: #003b00;
 
-  /* Text */
-  --text-primary: #e0e6ed;
-  --text-secondary: #a0aec0;
-  --text-muted: #5a6a85;
-  --text-accent: #00e5ff;
+  /* Text: Terminal Green */
+  --text-primary: #00ff41;
+  --text-secondary: #00ce36;
+  --text-muted: #004d00;
+  --text-accent: #00ff41;
 
-  /* Borders */
-  --border-color: rgba(0, 229, 255, 0.12);
-  --border-glow: rgba(0, 229, 255, 0.35);
+  /* Borders: Sharp Green */
+  --border-color: rgba(0, 255, 65, 0.25);
+  --border-glow: rgba(0, 255, 65, 0.5);
 
-  /* Shadows */
-  --glow-cyan: 0 0 20px rgba(0, 229, 255, 0.15);
-  --glow-violet: 0 0 20px rgba(124, 77, 255, 0.15);
-  --glow-strong: 0 0 40px rgba(0, 229, 255, 0.25), 0 0 80px rgba(124, 77, 255, 0.1);
+  /* Shadows/Glows */
+  --glow-green: 0 0 10px rgba(0, 255, 65, 0.4);
+  --glow-strong: 0 0 20px rgba(0, 255, 65, 0.6), 0 0 40px rgba(0, 255, 65, 0.2);
 
   /* Spacing */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-sm: 4px; /* Sharper corners for retro feel */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.25s ease;
-  --transition-slow: 0.4s ease;
+  /* Transitions: Fast/Flickery */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.6s step-end;
 }
 
 /* ── Global Reset ─────────────────────────────────────────── */
@@ -58,6 +57,7 @@ body,
 #root {
   height: 100%;
   margin: 0;
+  background: var(--bg-primary);
 }
 
 body {
@@ -66,7 +66,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.5;
+  overflow: hidden; /* App Shell handles scroll */
 }
 
 code,
@@ -77,8 +78,8 @@ pre,
 
 /* ── Scrollbar ────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -86,16 +87,16 @@ pre,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
-  border-radius: 3px;
+  background: var(--accent-green-muted);
+  border: 2px solid var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-cyan);
+  background: var(--accent-green);
 }
 
-/* ── Selection ────────────────────────────────────────────── */
+/* ── Selection: Hacker Green ──────────────────────────────── */
 ::selection {
-  background: rgba(0, 229, 255, 0.25);
-  color: #fff;
+  background: var(--accent-green);
+  color: #000;
 }
