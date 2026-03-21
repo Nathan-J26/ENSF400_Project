@@ -1,92 +1,386 @@
+/* ── Container ────────────────────────────────────────────── */
 .container {
   display: flex;
-  flex: 0 0 100%;
+  min-height: 100vh;
+  width: 100%;
 }
 
+/* ── Main Content ─────────────────────────────────────────── */
 .main {
-  flex: 1 1 auto;
-  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 48px;
+  overflow-y: auto;
   min-width: 0;
-  background-color: #d9e6e6;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.main-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.title-bracket {
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.subtitle {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Input Area ───────────────────────────────────────────── */
+.input-wrapper {
+  width: 100%;
+  max-width: 780px;
+  margin-bottom: 16px;
+}
+
+.input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.char-count {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
 #user-input {
-  font-size: 1rem;
-  width: 65vw;
-  min-height: max(14vh, 200px);
+  width: 100%;
+  min-height: max(14vh, 180px);
   max-height: 500px;
+  padding: 20px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
   resize: none;
   overflow-y: auto;
-  box-sizing: border-box;
-  padding: 0.9rem;
-  border-radius: 1vw;
+  outline: none;
+  transition: all var(--transition-base);
 }
 
+#user-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+#user-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow:
+    0 0 0 3px var(--accent-cyan-dim),
+    var(--glow-cyan);
+}
+
+/* ── Controls ─────────────────────────────────────────────── */
 .controls {
-  width: 65vw;
-  margin: 15px auto;
+  width: 100%;
+  max-width: 780px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
 }
 
-h2 {
-  font-family: "Tourney";
-  font-size: 3rem;
-  font-weight: 400;
-  box-sizing: border-box;
-  margin: 2vh;
-}
-
-.output {
-  margin-top: 20px;
-  background: #ffffff;
-  padding: 10px;
-  border-radius: 0.5vw;
-}
-
-.controls label,
-.output,
-button {
-  font-size: 1rem;
-}
-
-button {
-  padding: 6px 12px;
+/* Toggle Switch */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   cursor: pointer;
-  background-color: white;
-  border-color: rgb(118, 118, 118);
-  border-radius: 0.5vw;
-  font-family: monospace;
-  box-shadow: 2px 2px #9daaaa;
+  user-select: none;
 }
 
-button:hover {
-  background-color: rgb(228, 228, 228);
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  position: relative;
+  transition: all var(--transition-base);
+  cursor: pointer;
 }
 
-.controls label {
-  padding: 3px 5px 3px 0;
-  border-radius: 0.1vw;
-}
-.controls label:hover {
-  background-color: #9daaaa;
+.toggle-switch.active {
+  background: var(--accent-cyan-dim);
+  border-color: var(--accent-cyan);
 }
 
-.output h3 {
-  font-weight: 400;
+.toggle-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all var(--transition-base);
 }
 
+.toggle-switch.active .toggle-thumb {
+  left: 22px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.toggle-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+  /* Submit Button */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(0, 229, 255, 0.25),
+    0 4px 12px rgba(124, 77, 255, 0.2);
+}
+
+.submit-btn:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-spark {
+  font-size: 1.1rem;
+}
+
+.btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Output Panel ─────────────────────────────────────────── */
 .output {
-  border: rgb(118, 118, 118) solid 1px;
+  width: 100%;
+  max-width: 780px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-slow);
+}
+
+.output.has-content {
+  box-shadow: var(--glow-cyan);
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+
+.output-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.output-body {
+  padding: 20px 24px;
+  min-height: 80px;
 }
 
 .summary-text {
-  text-align: left;
-  max-width: 90%;
-  width: fit-content;
-  margin: 0 auto;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--text-primary);
   white-space: pre-wrap;
   word-break: break-word;
-  overflow-x: auto;
+  margin: 0;
+}
+
+.placeholder-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Typing Indicator ─────────────────────────────────────── */
+.typing-indicator {
+  display: flex;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  opacity: 0.4;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    max-height: 200px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+  }
+
+  .main {
+    padding: 24px 16px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .input-wrapper,
+  .controls,
+  .output {
+    max-width: 100%;
+  }
 }
