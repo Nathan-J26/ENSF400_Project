@@ -10,9 +10,10 @@
 
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   background: transparent;
+  overflow: hidden;
 }
 
 /* ── Header ───────────────────────────────────────────────── */
@@ -54,6 +55,12 @@
   color: var(--accent-green);
   box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);
   caret-color: var(--accent-green);
+  height: 300px;
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #user-input:focus {
@@ -62,6 +69,38 @@
 }
 
 /* ── Controls ─────────────────────────────────────────────── */
+
+/* Example Code Button */
+.example-btn {
+  background: transparent;
+  border: 2px solid var(--accent-green);
+  color: var(--accent-green);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.example-btn:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 10px var(--accent-green-dim);
+}
+
+.example-btn.active {
+  background: var(--accent-green-dim);
+  color: #000;
+  box-shadow: 0 0 15px var(--accent-green);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
 
 /* Toggle Switch */
 .toggle-switch {
@@ -75,7 +114,8 @@
 
 .toggle-thumb {
   background: var(--accent-green-muted);
-  border-radius: 0; /* Retro square thumb */
+  border-radius: 0;
+  /* Retro square thumb */
 }
 
 .toggle-switch.active .toggle-thumb {
@@ -136,7 +176,8 @@
 .typing-indicator span {
   background: var(--accent-green);
   box-shadow: 0 0 10px var(--accent-green);
-  border-radius: 0; /* Square retro dots */
+  border-radius: 0;
+  /* Square retro dots */
 }
 
 /* ── Character Count ──────────────────────────────────────── */

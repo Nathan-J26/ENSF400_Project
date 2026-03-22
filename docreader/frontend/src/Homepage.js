@@ -33,12 +33,6 @@ function Homepage() {
     }
   };
 
-  const MAX_HEIGHT = 500;
-  function handleTextareaInput(e) {
-    const el = e.target;
-    el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, MAX_HEIGHT)}px`;
-  }
 
   return (
     <div className="container">
@@ -69,7 +63,6 @@ function Homepage() {
           <textarea
             id="user-input"
             placeholder="// Paste your documentation, code, or API reference here..."
-            onInput={handleTextareaInput}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             spellCheck="false"
@@ -78,15 +71,13 @@ function Homepage() {
 
         {/* Controls */}
         <div className="controls">
-          <label className="toggle-label">
-            <div
-              className={`toggle-switch ${includeExamples ? "active" : ""}`}
-              onClick={() => setIncludeExamples(!includeExamples)}
-            >
-              <div className="toggle-thumb"></div>
-            </div>
-            <span className="toggle-text">Include example code</span>
-          </label>
+          <button
+            className={`example-btn ${includeExamples ? "active" : ""}`}
+            onClick={() => setIncludeExamples(!includeExamples)}
+          >
+            <span className="btn-icon">{includeExamples ? "☑" : "☐"}</span>
+            Include example code
+          </button>
 
           <button
             className={`submit-btn ${isLoading ? "loading" : ""}`}
@@ -100,7 +91,7 @@ function Homepage() {
               </span>
             ) : (
               <>
-                <span className="btn-spark">⚡</span>
+                <span className="btn-spark">➤ </span>
                 Summarize
               </>
             )}
