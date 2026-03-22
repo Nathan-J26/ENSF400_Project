@@ -170,6 +170,8 @@
 .summary-text {
   color: var(--accent-green);
   font-weight: bold;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* ── Typing Indicator ─────────────────────────────────────── */
