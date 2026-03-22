@@ -78,7 +78,7 @@ function Homepage() {
             <span className="btn-icon">{includeExamples ? "☑" : "☐"}</span>
             Include example code
           </button>
-
+          <br />
           <button
             className={`submit-btn ${isLoading ? "loading" : ""}`}
             onClick={handleSubmit}
@@ -96,9 +96,11 @@ function Homepage() {
               </>
             )}
           </button>
+          <br />
         </div>
 
         {/* Output */}
+        <br />
         <div className={`output ${summary || isLoading ? "has-content" : ""}`}>
           <div className="output-header">
             <div className="terminal-dots">
