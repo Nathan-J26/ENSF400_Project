@@ -21,8 +21,26 @@ client = genai.Client(api_key=API_KEY)
 
 
 
+from database import supabase
+
 @app.route("/summarize", methods=["POST"])
 def summarize():
+    # 1. Extract the user token from the Authorization header
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Unauthorized: Missing or invalid token"}), 401
+    
+    token = auth_header.split(" ")[1]
+    
+    # 2. Verify token with Supabase
+    try:
+        user_response = supabase.auth.get_user(token)
+        user = user_response.user
+        if not user:
+            return jsonify({"error": "Unauthorized: Invalid token"}), 401
+    except Exception as e:
+        return jsonify({"error": f"Auth error: {str(e)}"}), 401
+
     data = request.json
     user_input = data.get("text")
 
@@ -32,7 +50,9 @@ def summarize():
     include_examples = data.get("include_examples")
 
     prompt = f"""
-    Simplify the following documentation...
+    Simplify the provided documentation. Put a focus on readability, utilizing simpler terms that can be easily understood by those with basic programming knowledge. 
+    Your output should only contain said documentation, ignoring the code itself. 
+    You can take the code as input for your response, but do not include it in the output UNLESS the next sentence explicitly asks for you to 'Include some code examples in the summary'.
     {user_input}
     """
 
@@ -46,10 +66,11 @@ def summarize():
 
         summary_text = response.text
 
-        # Example: store conversation (temporary user_id=1)
-        convo = create_conversation(user_id=1, title=user_input[:50])
-        add_message(convo.id, "user", user_input)
-        add_message(convo.id, "assistant", summary_text)
+        # Store conversation in Supabase (tied to the authenticated user UUID)
+        convo = create_conversation(user_id=user.id, title=user_input[:50])
+        if convo:
+            add_message(convo['id'], "user", user_input)
+            add_message(convo['id'], "llm", summary_text)
 
         return jsonify({"summary": summary_text})
 

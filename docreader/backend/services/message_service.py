@@ -1,14 +1,18 @@
-from database import db, Message
+from database import supabase
 
 def add_message(conversation_id, role, content):
-    msg = Message(
-        conversation_id=conversation_id,
-        role=role,
-        content=content
-    )
-    db.session.add(msg)
-    db.session.commit()
-    return msg
+    if not supabase: return None
+
+    response = supabase.table("message").insert({
+        "conversation_id": conversation_id,
+        "role": role,
+        "content": content
+    }).execute()
+    
+    return response.data[0] if response.data else None
 
 def get_messages(conversation_id):
-    return Message.query.filter_by(conversation_id=conversation_id).all()
+    if not supabase: return []
+    
+    response = supabase.table("message").select("*").eq("conversation_id", conversation_id).execute()
+    return response.data

@@ -1,11 +1,24 @@
-from database import db, User, bcrypt
+from database import supabase
 
 def create_user(username, email, password):
-    hashed = bcrypt.generate_password_hash(password).decode('utf-8')
-    user = User(username=username, email=email, password_hash=hashed)
-    db.session.add(user)
-    db.session.commit()
-    return user
+    # In a typical Supabase architecture, user creation happens on the 
+    # frontend using supabase.auth.signUp() so that the session is managed safely.
+    # However, if creating from the backend:
+    if not supabase: return None
+    
+    response = supabase.auth.sign_up({
+        "email": email,
+        "password": password,
+        "options": {
+            "data": {
+                "username": username
+            }
+        }
+    })
+    return response.user
 
 def find_user_by_email(email):
-    return User.query.filter_by(email=email).first()
+    # Typically, you query the auth.users table or a public.users profile table.
+    # Supabase doesn't allow direct SELECT on auth.users with the anon key.
+    # A Service Role key would be required to use admin APIs.
+    raise NotImplementedError("Supabase handles authentication. Use JWT tokens to identify users.")
