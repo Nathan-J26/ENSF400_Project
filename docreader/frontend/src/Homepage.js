@@ -109,6 +109,11 @@ function Homepage() {
               <span className="dot dot-green"></span>
             </div>
             <span className="output-title">output.md</span>
+            <div className="window-controls">
+              <span className="win-btn win-min">_</span>
+              <span className="win-btn win-max">□</span>
+              <span className="win-btn win-close">×</span>
+            </div>
           </div>
           <div className="output-body">
             {isLoading ? (

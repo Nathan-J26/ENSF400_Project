@@ -166,17 +166,71 @@
 .output-header {
   background: var(--accent-green-muted);
   border-bottom: 2px solid var(--accent-green);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  height: 32px;
 }
 
 .output-title {
   color: #000;
   font-weight: bold;
   text-transform: uppercase;
+  flex: 1;
+  text-align: center;
+  margin-right: 20px;
+  /* offset the terminal dots to center title better */
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+  width: 60px;
+  /* give dots some fixed space */
 }
 
 .terminal-dots .dot {
   background: #000;
   border: 1px solid var(--accent-green);
+  width: 10px;
+  height: 10px;
+}
+
+.window-controls {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.win-btn {
+  background: transparent;
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+  box-shadow: 0 0 5px rgba(0, 255, 65, 0.2);
+  user-select: none;
+}
+
+.win-close {
+  margin-left: 4px;
+}
+
+.win-max {
+  margin-left: 4px;
+}
+
+.win-min {
+  margin-left: 4px;
 }
 
 .summary-text {
