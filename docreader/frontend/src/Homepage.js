@@ -3,6 +3,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import "./Homepage.css";
 import axios from "axios";
+import { supabase } from "./supabaseClient";
 
 function Homepage({ session }) {
   const [input, setInput] = useState("");
@@ -44,15 +45,36 @@ function Homepage({ session }) {
 
       <div className="main">
         {/* Header */}
-        <div className="main-header">
-          <h1 className="title">
-            <span className="title-bracket">&lt;</span>
-            DocReader
-            <span className="title-bracket">/&gt;</span>
-          </h1>
-          <p className="subtitle">
-            AI-powered documentation summarizer &amp; code cleanup
-          </p>
+        <div className="main-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <h1 className="title">
+              <span className="title-bracket">&lt;</span>
+              DocReader
+              <span className="title-bracket">/&gt;</span>
+            </h1>
+            <p className="subtitle">
+              AI-powered documentation summarizer &amp; code cleanup
+            </p>
+          </div>
+          <button 
+            className="logout-btn"
+            onClick={() => supabase.auth.signOut()} 
+            style={{ 
+              backgroundColor: 'transparent', 
+              color: 'var(--accent-green)', 
+              border: '1px solid var(--accent-green)', 
+              padding: '8px 16px', 
+              fontFamily: 'inherit', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              textTransform: 'uppercase',
+              transition: 'var(--transition-fast)'
+            }}
+            onMouseOver={(e) => { e.target.style.backgroundColor = 'var(--accent-green)'; e.target.style.color = '#000'; }}
+            onMouseOut={(e) => { e.target.style.backgroundColor = 'transparent'; e.target.style.color = 'var(--accent-green)'; }}
+          >
+            [ LOG OUT ]
+          </button>
         </div>
 
         {/* Input Area */}
