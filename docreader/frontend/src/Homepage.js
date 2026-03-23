@@ -69,8 +69,14 @@ function Homepage({ session }) {
         fetchConversations();
       }
     } catch (err) {
-      console.error(err);
-      alert("Error processing request");
+      if(err.response?.status === 401) {
+        alert("Your session has expired. This may be caused by logging in on another device. Please log in again.");
+        await supabase.auth.signOut(); // clears out old session
+      }
+      else {
+        console.error(err);
+        alert("Error processing request");
+      }
     } finally {
       setIsLoading(false);
     }
