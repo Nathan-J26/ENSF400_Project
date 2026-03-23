@@ -3,8 +3,8 @@ from flask_cors import CORS
 import json
 import os
 from google import genai
-from services.conversation_service import create_conversation
-from services.message_service import add_message
+from services.conversation_service import create_conversation, get_user_conversations
+from services.message_service import add_message, get_messages
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +22,42 @@ client = genai.Client(api_key=API_KEY)
 
 
 from database import supabase
+
+@app.route("/conversations", methods=["GET"])
+def get_conversations():
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Unauthorized: Missing or invalid token"}), 401
+    
+    token = auth_header.split(" ")[1]
+    try:
+        user_response = supabase.auth.get_user(token)
+        user = user_response.user
+        if not user:
+            return jsonify({"error": "Unauthorized: Invalid token"}), 401
+    except Exception as e:
+        return jsonify({"error": f"Auth error: {str(e)}"}), 401
+
+    conversations = get_user_conversations(user.id)
+    return jsonify({"conversations": conversations})
+
+@app.route("/conversations/<conversation_id>/messages", methods=["GET"])
+def get_conversation_messages(conversation_id):
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Unauthorized: Missing or invalid token"}), 401
+    
+    token = auth_header.split(" ")[1]
+    try:
+        user_response = supabase.auth.get_user(token)
+        user = user_response.user
+        if not user:
+            return jsonify({"error": "Unauthorized: Invalid token"}), 401
+    except Exception as e:
+        return jsonify({"error": f"Auth error: {str(e)}"}), 401
+
+    messages = get_messages(conversation_id)
+    return jsonify({"messages": messages})
 
 @app.route("/summarize", methods=["POST"])
 def summarize():
@@ -67,13 +103,22 @@ def summarize():
 
         summary_text = response.text
 
-        # Store conversation in Supabase (tied to the authenticated user UUID)
-        convo = create_conversation(user_id=user.id, title=user_input[:50])
-        if convo:
-            add_message(convo['id'], "user", user_input)
-            add_message(convo['id'], "llm", summary_text)
+        conversation_id = data.get("conversation_id") # will be None on first message
+        current_convo_id = conversation_id
 
-        return jsonify({"summary": summary_text})
+        # Store conversation in Supabase (tied to the authenticated user UUID)
+
+        if not current_convo_id: # If no conversation has been initiated (First session)
+            # create the conversation and set the current_convo_id
+            convo = create_conversation(user_id=user.id, title=user_input[:50]) 
+            if convo:
+                current_convo_id = convo['id']
+
+        if current_convo_id: # Once a sessions is active, add the messages
+            add_message(current_convo_id, "user", user_input)
+            add_message(current_convo_id, "llm", summary_text)
+
+        return jsonify({"summary": summary_text, "conversation_id": current_convo_id})
 
     except Exception as e:
         print("Error in /summarize:", e)
