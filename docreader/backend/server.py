@@ -5,6 +5,7 @@ import os
 from google import genai
 from services.conversation_service import create_conversation, get_user_conversations
 from services.message_service import add_message, get_messages
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
