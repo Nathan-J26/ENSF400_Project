@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import "./Homepage.css";
 import axios from "axios";
 
-function Homepage() {
+function Homepage({ session }) {
   const [input, setInput] = useState("");
   const [summary, setSummary] = useState("");
   const [includeExamples, setIncludeExamples] = useState(false);
@@ -22,6 +22,10 @@ function Homepage() {
       const res = await axios.post("http://localhost:5000/summarize", {
         text: input,
         include_examples: includeExamples,
+      }, {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
       });
       setSummary(res.data.summary);
       console.log(res.data.summary);
