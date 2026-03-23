@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import "./Homepage.css";
 import axios from "axios";
@@ -7,10 +6,42 @@ import { supabase } from "./supabaseClient";
 
 function Homepage({ session }) {
   const [input, setInput] = useState("");
-  const [summary, setSummary] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [conversations, setConversations] = useState([]);
   const [includeExamples, setIncludeExamples] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState(null) // null on first conversation
+
+  useEffect(() => {
+    fetchConversations();
+  }, [session.access_token]);
+
+  const fetchConversations = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/conversations", {
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+      setConversations(res.data.conversations || []);
+    } catch (err) {
+      console.error("Failed to fetch conversations", err);
+    }
+  };
+
+  const loadConversation = async (id) => {
+    setConversationId(id);
+    setIsLoading(true);
+    setMessages([]);
+    try {
+      const res = await axios.get(`http://localhost:5000/conversations/${id}/messages`, {
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+      setMessages(res.data.messages || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -18,11 +49,13 @@ function Homepage({ session }) {
       return;
     }
 
-    setSummary("");
+    const currentInput = input;
+    setMessages(prev => [...prev, { role: "user", content: currentInput }]);
+    setInput("");
     setIsLoading(true);
     try {
       const res = await axios.post("http://localhost:5000/summarize", {
-        text: input,
+        text: currentInput,
         include_examples: includeExamples,
         conversation_id: conversationId,
       }, {
@@ -30,8 +63,11 @@ function Homepage({ session }) {
           Authorization: `Bearer ${session.access_token}`
         }
       });
-      setSummary(res.data.summary);
-      console.log(res.data.summary);
+      setMessages(prev => [...prev, { role: "llm", content: res.data.summary }]);
+      if (!conversationId && res.data.conversation_id) {
+        setConversationId(res.data.conversation_id);
+        fetchConversations();
+      }
     } catch (err) {
       console.error(err);
       alert("Error processing request");
@@ -43,7 +79,7 @@ function Homepage({ session }) {
 
   return (
     <div className="container">
-      <Sidebar />
+      <Sidebar conversations={conversations} onSelectConversation={loadConversation} />
 
       <div className="main">
         {/* Header */}
@@ -129,7 +165,7 @@ function Homepage({ session }) {
 
         {/* Output */}
         <br />
-        <div className={`output ${summary || isLoading ? "has-content" : ""}`}>
+        <div className={`output ${messages.length > 0 || isLoading ? "has-content" : ""}`}>
           <div className="output-header">
             <div className="terminal-dots">
               <span className="dot dot-red"></span>
@@ -143,15 +179,31 @@ function Homepage({ session }) {
               <span className="win-btn win-close">×</span>
             </div>
           </div>
-          <div className="output-body">
-            {isLoading ? (
+          <div className="output-body" style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '15px' }}>
+            {messages.length > 0 ? (
+              <div className="messages-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {messages.map((msg, idx) => (
+                  <div key={idx} className={`message ${msg.role}`} style={{ borderLeft: `2px solid ${msg.role === 'user' ? '#fff' : 'var(--accent-green)'}`, paddingLeft: '10px' }}>
+                    <div className="message-role" style={{ color: msg.role === 'user' ? '#fff' : 'var(--accent-green)', fontWeight: 'bold', marginBottom: '5px' }}>
+                      [{msg.role === 'user' ? 'YOU' : 'DOCREADER'}]
+                    </div>
+                    <pre className="summary-text">{msg.content}</pre>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                )}
+              </div>
+            ) : isLoading ? (
               <div className="typing-indicator">
                 <span></span>
                 <span></span>
                 <span></span>
               </div>
-            ) : summary ? (
-              <pre className="summary-text">{summary}</pre>
             ) : (
               <p className="placeholder-text">
                 Summary will appear here after processing...

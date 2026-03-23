@@ -1,6 +1,6 @@
 import "./Sidebar.css";
 
-function Sidebar() {
+function Sidebar({ conversations = [], onSelectConversation }) {
   return (
     <aside className="sidebar">
       {/* Brand */}
@@ -20,10 +20,19 @@ function Sidebar() {
       <div className="sidebar-section">
         <h4 className="sidebar-section-title">History</h4>
         <div className="history-list">
-          <div className="history-item">
-            <span className="history-dot"></span>
-            <span className="history-text">No sessions yet</span>
-          </div>
+          {conversations.length > 0 ? (
+            conversations.map(convo => (
+              <div key={convo.id} className="history-item" onClick={() => onSelectConversation(convo.id)}>
+                <span className="history-dot"></span>
+                <span className="history-text">{convo.title || "Untitled Session"}</span>
+              </div>
+            ))
+          ) : (
+            <div className="history-item">
+              <span className="history-dot"></span>
+              <span className="history-text">No sessions yet</span>
+            </div>
+          )}
         </div>
       </div>
 
