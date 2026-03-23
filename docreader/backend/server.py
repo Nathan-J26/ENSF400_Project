@@ -9,6 +9,7 @@ from services.message_service import add_message, get_messages
 app = Flask(__name__)
 CORS(app)
 
+load_dotenv() 
 
 # Do not put your API keys on github
 # You have to set an environment variable
