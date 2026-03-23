@@ -5,10 +5,12 @@ import os
 from google import genai
 from services.conversation_service import create_conversation
 from services.message_service import add_message
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
 
+load_dotenv() 
 
 # Do not put your API keys on github
 # You have to set an environment variable
