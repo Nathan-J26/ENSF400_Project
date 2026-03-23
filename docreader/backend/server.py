@@ -52,6 +52,7 @@ def summarize():
     prompt = f"""
     Simplify the provided documentation. Put a focus on readability, utilizing simpler terms that can be easily understood by those with basic programming knowledge. 
     Your output should only contain said documentation, ignoring the code itself. 
+    Do not use markdown formatting, such as using ### and ''', Use simple and clean formatting. Using plain text paragraphs and bullet points only.
     You can take the code as input for your response, but do not include it in the output UNLESS the next sentence explicitly asks for you to 'Include some code examples in the summary'.
     {user_input}
     """
