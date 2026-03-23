@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./Homepage";
 import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
+import MatrixRain from "./MatrixRain";
+import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
@@ -56,6 +58,7 @@ function App() {
 
   return (
     <div className="App">
+      <MatrixRain />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage session={session} />} />

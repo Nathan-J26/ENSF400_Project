@@ -1,15 +1,55 @@
-body {
-  margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ── Design Tokens: Hacker Terminal ────────────────────────── */
+:root {
+  /* Backgrounds: Pure Black/Dark Green */
+  --bg-primary: #000000;
+  --bg-surface: rgba(0, 15, 0, 0.85);
+  --bg-surface-solid: #050a05;
+  --bg-elevated: rgba(0, 31, 0, 0.45);
+  --bg-input: rgba(0, 5, 0, 0.95);
+
+  /* Accents: Fluorescent Green (Matrix) */
+  --accent-green: #00ff41;
+  --accent-green-bright: #33ff00;
+  --accent-green-dim: rgba(0, 255, 65, 0.15);
+  --accent-green-muted: #003b00;
+
+  /* Text: Terminal Green */
+  --text-primary: #00ff41;
+  --text-secondary: #00ce36;
+  --text-muted: #004d00;
+  --text-accent: #00ff41;
+
+  /* Borders: Sharp Green */
+  --border-color: rgba(0, 255, 65, 0.25);
+  --border-glow: rgba(0, 255, 65, 0.5);
+
+  /* Shadows/Glows */
+  --glow-green: 0 0 10px rgba(0, 255, 65, 0.4);
+  --glow-strong: 0 0 20px rgba(0, 255, 65, 0.6), 0 0 40px rgba(0, 255, 65, 0.2);
+
+  /* Spacing */
+  --radius-sm: 4px; /* Sharper corners for retro feel */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Transitions: Fast/Flickery */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.6s step-end;
 }
 
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+/* ── Global Reset ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -17,5 +57,46 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  font-family: monospace, Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow: hidden; /* App Shell handles scroll */
+}
+
+code,
+pre,
+.mono {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green-muted);
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green);
+}
+
+/* ── Selection: Hacker Green ──────────────────────────────── */
+::selection {
+  background: var(--accent-green);
+  color: #000;
 }
