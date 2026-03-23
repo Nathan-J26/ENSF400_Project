@@ -44,14 +44,17 @@ function App() {
 
   if (!session) {
     return (
-      <div className="App" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: '20px' }}>
-        <h2>Login to DocReader</h2>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ padding: '8px' }}/>
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ padding: '8px' }}/>
-          <button disabled={loading} onClick={handleLogin} style={{ padding: '10px', cursor: 'pointer' }}>Log In</button>
-          <button disabled={loading} onClick={handleSignUp} style={{ padding: '10px', cursor: 'pointer' }}>Sign Up</button>
-        </form>
+      <div className="App">
+        <MatrixRain />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100%', gap: '20px', zIndex: 10 }}>
+          <h2 style={{ color: 'var(--accent-green)', textShadow: 'var(--glow-green)' }}>LOGIN TO DOCREADER_</h2>
+          <form style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '300px', backgroundColor: 'var(--bg-surface)', padding: '30px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--glow-green)' }}>
+            <input type="email" placeholder="ENTER EMAIL" value={email} onChange={(e) => setEmail(e.target.value)} style={{ padding: '10px', backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', outline: 'none', fontFamily: 'inherit' }}/>
+            <input type="password" placeholder="ENTER PASSWORD" value={password} onChange={(e) => setPassword(e.target.value)} style={{ padding: '10px', backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', outline: 'none', fontFamily: 'inherit' }}/>
+            <button disabled={loading} onClick={handleLogin} style={{ padding: '12px', cursor: 'pointer', backgroundColor: 'transparent', color: 'var(--accent-green)', border: '1px solid var(--accent-green)', fontFamily: 'inherit', fontWeight: 'bold', textTransform: 'uppercase', transition: 'var(--transition-fast)' }} onMouseOver={(e) => { e.target.style.backgroundColor = 'var(--accent-green)'; e.target.style.color = '#000'; }} onMouseOut={(e) => { e.target.style.backgroundColor = 'transparent'; e.target.style.color = 'var(--accent-green)'; }}>[ INITIATE LOGIN ]</button>
+            <button disabled={loading} onClick={handleSignUp} style={{ padding: '12px', cursor: 'pointer', backgroundColor: 'transparent', color: 'var(--accent-green)', border: '1px solid var(--border-color)', fontFamily: 'inherit', fontWeight: 'bold', textTransform: 'uppercase', transition: 'var(--transition-fast)' }} onMouseOver={(e) => { e.target.style.backgroundColor = 'var(--accent-green-dim)'; }} onMouseOut={(e) => { e.target.style.backgroundColor = 'transparent'; }}>[ REGISTER ACCESS ]</button>
+          </form>
+        </div>
       </div>
     );
   }
