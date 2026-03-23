@@ -10,7 +10,8 @@ function Sidebar() {
       </div>
 
       {/* New Chat Button */}
-      <button className="new-chat-btn" onClick={() => window.location.reload()}>
+      <button className="new-chat-btn" onClick={() => window.location.reload()}> 
+      {/* Once the user clicks this, conversationId in Homepage.js will be set to null, causing a new conversation to be initiated */}
         <span className="btn-icon">+</span>
         New Session
       </button>

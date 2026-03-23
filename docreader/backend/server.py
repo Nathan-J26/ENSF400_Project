@@ -67,11 +67,20 @@ def summarize():
 
         summary_text = response.text
 
+        conversation_id = data.get("conversation_id") # will be None on first message
+        current_convo_id = conversation_id
+
         # Store conversation in Supabase (tied to the authenticated user UUID)
-        convo = create_conversation(user_id=user.id, title=user_input[:50])
-        if convo:
-            add_message(convo['id'], "user", user_input)
-            add_message(convo['id'], "llm", summary_text)
+
+        if not current_convo_id: # If no conversation has been initiated (First session)
+            # create the conversation and set the current_convo_id
+            convo = create_conversation(user_id=user.id, title=user_input[:50]) 
+            if convo:
+                current_convo_id = convo['id']
+
+        if current_convo_id: # Once a sessions is active, add the messages
+            add_message(current_convo_id, "user", user_input)
+            add_message(current_convo_id, "llm", summary_text)
 
         return jsonify({"summary": summary_text})
 

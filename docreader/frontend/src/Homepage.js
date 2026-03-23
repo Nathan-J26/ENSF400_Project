@@ -10,6 +10,7 @@ function Homepage({ session }) {
   const [summary, setSummary] = useState("");
   const [includeExamples, setIncludeExamples] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationId, setConversationId] = useState(null) // null on first conversation
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -23,6 +24,7 @@ function Homepage({ session }) {
       const res = await axios.post("http://localhost:5000/summarize", {
         text: input,
         include_examples: includeExamples,
+        conversation_id: conversationId,
       }, {
         headers: {
           Authorization: `Bearer ${session.access_token}`
